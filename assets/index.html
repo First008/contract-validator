@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<!-- === File Upload ===
+Design a file upload element. Is it the loading screen and icon? A progress element? Are folders being uploaded by flying across the screen like Ghostbusters? ;)  
+-->
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/app/css/StyleSheet.css" rel="stylesheet">
+</head>
+
+<body>
+  <a href="https://bag.org.tr/">
+    <img src="/app/images/bzlablogo.png" class="logo" />
+  </a>
+  <!-- FIXME fetch from net -->
+  <script class="jsbin" src="/app/dist/jquery.min.js"></script>
+
+  <div class="file-upload">
+    
+    <div class="dropdown">
+      <form action="http://localhost:3000/provider" method="post">
+        <button id="networkselectionbtn" name="networkselectionbtn" class="network-selection-btn" type="button" >Networks</button>
+        <div class="dropdown-content">
+          <input type="text" id="prov" name="provider" style="display: none;">
+            <button class="network-btn" type="submit" onclick="selectNetwork('ropsten');" style="background-color: #CA33A3">Ropsten Test Network</button>
+            <button class="network-btn" type="submit" onclick="selectNetwork('custom');" style="background-color: #636363">Custom RPC</button>
+        </div>
+      </form>
+        
+  </div>
+
+
+    <form action="http://localhost:3000/file" method="post" enctype="multipart/form-data">
+      
+
+
+
+      <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Choose
+        file</button>
+
+      <div class="image-upload-wrap">
+
+        <input class="file-upload-input" type='file' name="avatar" onchange="readURL(this);" />
+        <div class="drag-text">
+          <h3>Drag and drop or select solidity file</h3>
+        </div>
+      </div>
+      <div class="file-upload-content">
+        <img src="/app/images/contract.png" class="file-upload-image" alt=".sol file" />
+
+        <div class="image-title-wrap">
+          <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded
+              Image</span></button>
+
+          <button type="submit" class="remove-image">Compile</button><br><br><br>
+    </form>
+    <form action = "http://127.0.0.1:3000/address" method = "POST">
+      <label for="contractAddress"> Enter the deployed contract address</label>
+      <input type="text" class="contract-address" name="contractAddress" placeholder="Smart Contracts' Address to compare...">
+      <button type="submit" class="remove-image">Get bytecode</button><br><br>
+   </form>
+
+   <form action = "http://127.0.0.1:3000/compare" method = "POST">
+    <button type="submit" class="remove-image">Compare smart contracts</button>
+   </form>
+   
+          
+
+        </div>
+      </div>
+  
+  </div>
+
+
+
+</body>
+
+<script>
+
+  function selectNetwork(rpc){
+
+    switch(rpc){
+      case "ropsten": document.querySelector('#networkselectionbtn').style.backgroundColor = "#CA33A3"; 
+        document.querySelector('#networkselectionbtn').innerHTML = "Ropsten Test Network"; 
+        document.querySelector('#prov').value = "Ropsten Test Network";
+        console.log("Switching to Ropsten Test Network.."); break;
+      case "custom": document.querySelector('#networkselectionbtn').style.backgroundColor = "#636363"; 
+        document.querySelector('#networkselectionbtn').innerHTML ="Custom RPC"; 
+        document.querySelector('#prov').value = "Custom RPC";
+        console.log("Switching to Custom RPC..");  break;
+    }
+
+
+
+  }
+
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        $('.image-upload-wrap').hide();
+        $('.file-upload-content').show();
+        $('.image-title').html(input.files[0].name);
+      };
+
+      reader.readAsDataURL(input.files[0]);
+      
+    } else {
+      removeUpload();
+    }
+  }
+
+  function removeUpload() {
+    $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+    $('.file-upload-content').hide();
+    $('.image-upload-wrap').show();
+  }
+  $('.image-upload-wrap').bind('dragover', function () {
+    $('.image-upload-wrap').addClass('image-dropping');
+  });
+  $('.image-upload-wrap').bind('dragleave', function () {
+    $('.image-upload-wrap').removeClass('image-dropping');
+  });
+
+
+
+</script>
+
+</html>

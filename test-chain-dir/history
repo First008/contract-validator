@@ -1,0 +1,10 @@
+personal.listAccounts
+perasonal.listAccounts
+perasonal.listAccount
+personal.listAccount
+personal.listAccounts
+eth.sendTransaction({from:eth.coinbase, to:eth.accounts[3], value: web3.toWei(100, "ether")})
+personal.listAccoutns
+personal.listAccounts
+0x1c3c37ecc8ba759a3fac8cabc8fedab677d6855
+personal.listAccounts
